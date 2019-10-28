@@ -10,6 +10,7 @@ import (
 
 // Error implements the error interface.
 type Error struct {
+	Id     string `json:"id"`
 	Code   int32  `json:"code"`
 	Detail string `json:"detail"`
 	Status string `json:"status"`
@@ -34,8 +35,10 @@ func New(detail string, code int32) error {
 func Parse(err string) *Error {
 	e := new(Error)
 	errr := json.Unmarshal([]byte(err), e)
+	fmt.Println(e)
 	if errr != nil {
-		e.Detail = err
+		e.Detail = e.Detail
+		e.Code = 500
 	}
 	return e
 }
